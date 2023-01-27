@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableWithoutFeedback, TouchableOpacity, TouchableHighlight, TouchableNativeFeedback } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableWithoutFeedback, TouchableOpacity, TouchableHighlight, TouchableNativeFeedback, Button, Alert, Platform, StatusBar } from "react-native";
 import favicon from "./assets/favicon.png";
 
 export default function App() {
@@ -13,18 +12,25 @@ export default function App() {
       <Text numberOfLines={1} onPress={handlePress}>Hello React Native. This is a veru long text to test numberoflines props </Text>
       <Image source={favicon} />
       <Text>Please click on the below image to see the effect.</Text>
-      <TouchableHighlight onPress={() => console.log("Image is clicked")}>
+      <TouchableOpacity onPress={() => console.log("Image is clicked")}>
         <Image
           source={{
             uri: "https://picsum.photos/200",
             width: 200,
             height: 300,
           }} />
-      </TouchableHighlight>
+      </TouchableOpacity>
       <TouchableNativeFeedback onPress={() => console.log("image tapped")}>
         <View style={{ width: 200, height: 70, backgroundColor: "dodgerblue" }}></View>
       </TouchableNativeFeedback  >
-      <StatusBar style="auto" />
+      <Button
+        color={"red"}
+        title="ClickMe"
+        onPress={() => Alert.alert("My Title", "button tapped", [{ text: "Yes", onPress: () => console.log("Yes is clicked") }, { text: "No", onPress: () => console.log("No is clicked") }])} />
+      <Button
+        color={"green"}
+        title="ClickMe"
+        onPress={() => Alert.prompt("My Title", "my message")} />
     </SafeAreaView>
   );
 }
@@ -33,7 +39,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: Platform.OS === "android" ? StatusBar?.currentHeight : 0
+    // alignItems: "center",
+    // justifyContent: "center", 
   },
 });
